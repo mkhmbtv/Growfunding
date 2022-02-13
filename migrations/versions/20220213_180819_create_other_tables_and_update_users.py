@@ -1,8 +1,8 @@
 """create other tables and update users
 
-Revision ID: 04cc4709ac70
+Revision ID: 780278b898d6
 Revises: ffdc0a98111c
-Create Date: 2022-02-13 01:56:50.038570
+Create Date: 2022-02-13 18:08:19.802323
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '04cc4709ac70'
+revision = '780278b898d6'
 down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
@@ -35,7 +35,7 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('fundraiser_id', sa.Integer(), nullable=False),
     sa.Column('amount', sa.Numeric(precision=10, scale=2), nullable=False),
-    sa.Column('comment', sa.String(length=255), nullable=False),
+    sa.Column('comment', sa.String(length=255), nullable=True),
     sa.Column('anonymous', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['fundraiser_id'], ['fundraisers.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
