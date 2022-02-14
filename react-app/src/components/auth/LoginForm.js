@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { login } from '../../store/session';
+import { login, demoLogin } from '../../store/session';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -17,6 +17,11 @@ const LoginForm = () => {
       setErrors(data);
     }
   };
+
+  const loginAsDemo = (e) => {
+    e.preventDefault()
+    dispatch(demoLogin())
+  }
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -56,8 +61,9 @@ const LoginForm = () => {
           value={password}
           onChange={updatePassword}
         />
-        <button type='submit'>Login</button>
       </div>
+      <button onClick={loginAsDemo}>Demo</button>
+      <button type='submit'>Login</button>
     </form>
   );
 };
