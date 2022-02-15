@@ -10,7 +10,7 @@ const NavBar = () => {
   let sessionLinks;
   if (user) {
     sessionLinks = (
-      <li className='px-4'>
+      <li className='px-4 hover:text-grey-light'>
         <LogoutButton />
       </li>
     )
@@ -47,7 +47,8 @@ const NavBar = () => {
           <li className='pl-4'>
             <NavLink 
               to='/'
-              className='py-2 px-4 border border-primary rounded text-primary hover:bg-primary hover:text-white duration-100'
+              className='py-2 px-4 border border-primary rounded text-primary
+                hover:bg-primary hover:text-white duration-200'
               exact={true}
             >
               Start Fundraising
