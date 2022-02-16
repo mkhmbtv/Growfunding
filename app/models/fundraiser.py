@@ -1,3 +1,4 @@
+import datetime
 from .db import db
 
 
@@ -13,7 +14,22 @@ class Fundraiser(db.Model):
     state = db.Column(db.String(40), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
-    goal_amount = db.Column(db.Numeric(10, 2), nullable=False)
+    goal_amount = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now())
 
     organizer = db.relationship('User', back_populates='fundraisers')
     donations = db.relationship('Donation', back_populates='fundraiser')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'city': self.city,
+            'state': self.state,
+            'description': self.description,
+            'image_url': self.image_url,
+            'goal_amount': self.goal_amount,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
