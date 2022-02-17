@@ -46,7 +46,7 @@ const NavBar = () => {
           {sessionLinks}
           <li className='pl-4'>
             <NavLink 
-              to='/'
+              to='/new-fundraiser'
               className='py-2 px-4 border border-primary rounded text-primary
                 hover:bg-primary hover:text-white duration-200'
               exact={true}

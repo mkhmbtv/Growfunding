@@ -5,6 +5,7 @@ import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import NewFundraiserForm from './components/NewFundraiserForm';
 import { authenticate } from './store/session';
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
           <Route path='/sign-up' exact={true}>
             <SignUpForm />
           </Route>
+          <ProtectedRoute path='/new-fundraiser' exact={true}>
+            <NewFundraiserForm />
+          </ProtectedRoute>
           <Route path='/' exact={true} >
             <h1 className="text-3xl font-bold">My Home Page</h1>
           </Route>
