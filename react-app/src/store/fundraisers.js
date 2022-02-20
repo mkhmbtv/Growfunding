@@ -27,7 +27,7 @@ export const createFundraiser = (fundraiser) => async (dispatch) => {
   form.append('image', image);
   form.append('goal_amount', goalAmount);
 
-  const res = await fetch('/api/fundraisers', {
+  const res = await fetch('/api/fundraisers/', {
     method: 'POST',
     body: form
   });
