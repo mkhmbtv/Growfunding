@@ -9,7 +9,7 @@ const NewFundraiserForm = () => {
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
-  const [goalAmount, setGoalAmount] = useState();
+  const [goalAmount, setGoalAmount] = useState('');
   const [errors, setErrors] = useState([]);
 
   const dispatch = useDispatch();
