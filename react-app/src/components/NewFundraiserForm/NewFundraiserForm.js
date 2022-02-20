@@ -42,63 +42,86 @@ const NewFundraiserForm = () => {
   };
 
   return (
-    <div>
-      <h1>Start Fundraising</h1>
-      {errors.length > 0 && 
-        errors.map((error) => <div key={error}>{error}</div>)
-      }
-      <form className="flex flex-col" onSubmit={onSubmit}>
-        <label>
-          Name
-          <input
-            type="text"
-            placeholder="Name of your fundraiser"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label>
-          City
-          <input
-            type="text"
-            placeholder="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </label>
-        <label>
-          State
-          <input
-            type="text"
-            placeholder="State"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-          />
-        </label>
-        <label>
-          Choose an image
-          <input
-            type="file"
-            onChange={updateFile}
-          />
-        </label>
-        <label>
-          Describe your fundraiser
-          <textarea 
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
-        <label>
-          <input
-            type="number"
-            placeholder="Enter a goal amount"
-            value={goalAmount}
-            onChange={(e) => setGoalAmount(e.target.value)}
-          />
-        </label>
-        <button type="submit">Create Fundraiser</button>
-      </form>
+    <div className="flex flex-col items-center h-full pt-14 pb-20">
+      <h1 className="text-4xl font-black mb-8">Start Fundraising</h1>
+      <div className="mb-4">
+        {errors.map((error, ind) => (
+          <div className='text-rose-700' key={ind}>{error}</div>
+        ))}
+      </div>
+      <div className="flex justify-center w-3/5">
+        <form className="w-11/12" onSubmit={onSubmit}>
+          <span>Where do you live?</span>
+          <div className="flex">
+            <input
+              className='p-2 border focus:outline-none rounded-sm mb-4 mr-4 w-full'
+              type="text"
+              name="city"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+            <input
+              className='p-2 border focus:outline-none rounded-sm mb-4 w-full'
+              type="text"
+              name="state"
+              placeholder="State"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="goal_amount">How much do you like to raise?</label>
+            <input
+              className='p-2 border focus:outline-none rounded-sm mb-4 w-full'
+              type="number"
+              name="goal_amount"
+              placeholder="Enter a goal amount"
+              value={goalAmount}
+              onChange={(e) => setGoalAmount(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="w-max inline-block px-4 py-2 mb-4 border 
+            border-primary rounded text-primary font-medium cursor-pointer">
+              Add a cover image
+              <input
+                className="hidden"
+                type="file"
+                onChange={updateFile}
+              />
+            </label>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="name">Title</label>
+            <input
+              className='p-2 border focus:outline-none rounded-sm mb-4 w-full'
+              type="text"
+              name="name"
+              placeholder="Fundraiser title"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="description">Tell your story</label>
+            <textarea
+              className='p-2 border focus:outline-none rounded-sm mb-8 w-full'
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={8}
+            />
+          </div>
+          <button
+            className='px-4 py-2 bg-primary rounded text-white font-extrabold
+            hover:bg-green-500 duration-200'
+            type="submit"
+          >
+            Create Fundraiser
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
