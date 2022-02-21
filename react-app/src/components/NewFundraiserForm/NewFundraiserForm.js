@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createFundraiser } from "../../store/fundraisers";
+import { createFundraiser, getCategories } from "../../store/fundraisers";
 
 const NewFundraiserForm = () => {
   const [name, setName] = useState('');
@@ -10,16 +10,24 @@ const NewFundraiserForm = () => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [goalAmount, setGoalAmount] = useState('');
+  const [categoryId, setCategoryId] = useState('');
   const [errors, setErrors] = useState([]);
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
+  const categories = useSelector(state => state.fundraisers.categories)
   const history = useHistory();
+
+  useEffect(() => {
+    if (categories.length > 0) return;
+    dispatch(getCategories());
+  }, [dispatch, categories]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const fundraiser = {
       userId: user.id,
+      categoryId,
       name,
       city,
       state,
@@ -60,6 +68,7 @@ const NewFundraiserForm = () => {
               placeholder="City"
               value={city}
               onChange={(e) => setCity(e.target.value)}
+              required
             />
             <input
               className='p-2 border focus:outline-none rounded-sm mb-4 w-full'
@@ -68,7 +77,25 @@ const NewFundraiserForm = () => {
               placeholder="State"
               value={state}
               onChange={(e) => setState(e.target.value)}
+              required
             />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor='category_id'>What are you fundraising for?</label>
+            <select
+              className='p-2.5 border focus:outline-none rounded-sm mb-4 w-full bg-white'
+              name='category_id'
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              
+            >
+              <option value='' disabled>Choose a category</option>
+              {categories.map(category => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col">
             <label htmlFor="goal_amount">How much do you like to raise?</label>
@@ -79,6 +106,7 @@ const NewFundraiserForm = () => {
               placeholder="Enter a goal amount"
               value={goalAmount}
               onChange={(e) => setGoalAmount(e.target.value)}
+              required
             />
           </div>
           <div>
@@ -101,6 +129,7 @@ const NewFundraiserForm = () => {
               placeholder="Fundraiser title"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
           <div className="flex flex-col">
@@ -111,6 +140,7 @@ const NewFundraiserForm = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={8}
+              required
             />
           </div>
           <button

@@ -1,15 +1,32 @@
 const ADD_ONE_FUNDRAISER = 'fundraisers/ADD_ONE_FUNDRAISER';
+const SET_CATEGORIES = 'categories/SET_CATEGORIES';
+
+const setCategories = (categories) => {
+  return {
+    type: SET_CATEGORIES,
+    categories
+  };
+};
 
 const addOneFundraiser = (fundraiser) => {
   return {
     type: ADD_ONE_FUNDRAISER,
     fundraiser
   }
-}
+};
+
+export const getCategories = () => async (dispatch) => {
+  const res = await fetch('/api/categories');
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(setCategories(data.categories))
+  }
+};
 
 export const createFundraiser = (fundraiser) => async (dispatch) => {
   const {
     userId,
+    categoryId,
     name,
     city,
     state,
@@ -20,6 +37,7 @@ export const createFundraiser = (fundraiser) => async (dispatch) => {
 
   const form = new FormData();
   form.append('user_id', userId);
+  form.append('category_id', categoryId);
   form.append('name', name);
   form.append('city', city);
   form.append('state', state);
@@ -49,12 +67,19 @@ export const createFundraiser = (fundraiser) => async (dispatch) => {
 
 const initialState = {
   byId: {},
-  allIds: []
+  allIds: [],
+  categories: [],
 };
 
 export default function reducer (state = initialState, action) {
   let newState = {};
   switch (action.type) {
+    case SET_CATEGORIES:
+      newState = {
+        ...state,
+        categories: action.categories,
+      };
+      return newState;
     case ADD_ONE_FUNDRAISER:
       newState = {
         ...state,
