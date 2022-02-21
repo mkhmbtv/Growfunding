@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now())
 
     fundraisers = db.relationship('Fundraiser', back_populates='organizer')
     donations = db.relationship('Donation', back_populates='donor')
@@ -34,5 +35,6 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'email': self.email,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

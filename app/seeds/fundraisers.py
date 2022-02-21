@@ -3,6 +3,7 @@ from app.models import db, Fundraiser
 
 def seed_fundraisers():
     fund1 = Fundraiser(user_id=3,
+                       category_id=1,
                        name='Help our animal shelter',
                        description="""Our animal shelter is in need of
                         supplies, including dog and cat food, kitty litter,
@@ -15,6 +16,7 @@ def seed_fundraisers():
                        image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644758248/growfunding/photo-1594004844563-536a03a6e532_ge8w2a.jpg',
                        goal_amount=20000)
     fund2 = Fundraiser(user_id=2,
+                       category_id=7,
                        name='Send Marnie to England',
                        description="""My name is Marnie. I have been and avid
                         Anglophile since I was a kid. It is my lifelong
@@ -28,6 +30,7 @@ def seed_fundraisers():
                        image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644750360/growfunding/photo-1515621061946-eff1c2a352bd_ngcvsp.jpg',
                        goal_amount=5000)
     fund3 = Fundraiser(user_id=4,
+                       category_id=6,
                        name='Support struggling small businesses',
                        description="""When the Covid pandemic hit, small business
                         owners across our city scrambled to survive. A lot of the
@@ -39,6 +42,7 @@ def seed_fundraisers():
                        image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644769522/growfunding/photo-1594402919317-9e67dca0a305_ymbpgy.jpg',
                        goal_amount=200000)
     fund4 = Fundraiser(user_id=4,
+                       category_id=5,
                        name='Trip to a tennis tournament',
                        description="""Our son really wants to become a tennis
                        player, but it's a very expensive sport to learn.

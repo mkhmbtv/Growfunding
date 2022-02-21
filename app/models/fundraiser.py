@@ -9,6 +9,9 @@ class Fundraiser(db.Model):
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.id'),
                         nullable=False)
+    category_id = db.Column(db.Integer,
+                            db.ForeignKey('categories.id'),
+                            nullable=False)
     name = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(40), nullable=False)
     state = db.Column(db.String(40), nullable=False)
@@ -19,11 +22,14 @@ class Fundraiser(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now())
 
     organizer = db.relationship('User', back_populates='fundraisers')
+    category = db.relationship('Category', back_populates='fundraisers')
     donations = db.relationship('Donation', back_populates='fundraiser')
 
     def to_dict(self):
         return {
             'id': self.id,
+            'user_id': self.user_id,
+            'category_id': self.category_id,
             'name': self.name,
             'city': self.city,
             'state': self.state,
