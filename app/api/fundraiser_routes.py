@@ -15,9 +15,12 @@ fund_routes = Blueprint('fundraisers', __name__)
 
 @fund_routes.route('/')
 def fundraisers():
-    fundraisers = Fundraiser.query.join(Donation) \
-                            .order_by(Donation.created_at.desc()) \
+    fundraisers = Fundraiser.query \
+                            .outerjoin(Donation) \
+                            .group_by(Fundraiser.id, Donation.created_at) \
+                            .order_by(db.func.count(Donation.id).desc(), Donation.created_at) \
                             .options(joinedload(Fundraiser.donations)) \
+                            .limit(3) \
                             .all()
     funds = [fundraiser.to_dict() for fundraiser in fundraisers]
     return {'fundraisers': funds}
