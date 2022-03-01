@@ -13,7 +13,7 @@ def seed_fundraisers():
                         animals warm. Any help is greatly appreciated.""",
                        city='Madison',
                        state='WI',
-                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644758248/growfunding/photo-1594004844563-536a03a6e532_ge8w2a.jpg',
+                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644787171/growfunding/photo-1583787317796-2bc56f8556e2_upnfpl.jpg',
                        goal_amount=20000)
     fund2 = Fundraiser(user_id=2,
                        category_id=7,
@@ -54,7 +54,7 @@ def seed_fundraisers():
                        """,
                        city='Dallas',
                        state='TX',
-                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644787171/growfunding/photo-1583787317796-2bc56f8556e2_upnfpl.jpg',
+                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644777589/growfunding/photo-1543382513-3617a90d9a46_aafqqh.jpg',
                        goal_amount=3000)
 
     db.session.add_all([fund1, fund2, fund3, fund4])

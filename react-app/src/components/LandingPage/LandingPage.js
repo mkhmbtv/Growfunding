@@ -1,8 +1,19 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import background from "../../images/hero.jpg"
+import { getFundraisers } from "../../store/fundraisers";
+import Fundraiser from "../Fundraiser";
+import background from "../../images/hero.jpg";
 
 const LandingPage = () => {
-  
+  const dispatch = useDispatch();
+  const fundraiserIds = useSelector(state => state.fundraisers.allIds);
+
+  useEffect(() => {
+    if (fundraiserIds.length > 0) return;
+    dispatch(getFundraisers());
+  }, [dispatch, fundraiserIds]);
+
   return (
     <div>
       <header 
@@ -21,6 +32,14 @@ const LandingPage = () => {
               to='/new-fundraiser'>Start Fundraising</Link>
         </div>
       </header>
+      <div className="px-40 py-16">
+        <h2 className="mb-8 text-2xl font-black">Top Fundraisers</h2>
+        <div className="grid grid-cols-layout gap-8">
+          {fundraiserIds.slice(0, 3).map(id => (
+            <Fundraiser key={id} id={id} />
+          ))}
+        </div>
+      </div>
     </div>
   )
 };

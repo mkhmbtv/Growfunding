@@ -20,7 +20,6 @@ def fundraisers():
                             .group_by(Fundraiser.id, Donation.created_at) \
                             .order_by(db.func.count(Donation.id).desc(), Donation.created_at) \
                             .options(joinedload(Fundraiser.donations)) \
-                            .limit(3) \
                             .all()
     funds = [fundraiser.to_dict() for fundraiser in fundraisers]
     return {'fundraisers': funds}

@@ -25,12 +25,6 @@ class Fundraiser(db.Model):
     category = db.relationship('Category', back_populates='fundraisers')
     donations = db.relationship('Donation', back_populates='fundraiser')
 
-    def donation_sum(self):
-        sum = 0
-        for donation in self.donations:
-            sum += donation.amount
-        return sum
-
     def to_dict(self):
         return {
             'id': self.id,
@@ -42,6 +36,7 @@ class Fundraiser(db.Model):
             'description': self.description,
             'image_url': self.image_url,
             'goal_amount': self.goal_amount,
+            'donations': [donation.to_dict() for donation in self.donations],
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

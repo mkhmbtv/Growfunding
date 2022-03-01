@@ -1,5 +1,13 @@
 const ADD_ONE_FUNDRAISER = 'fundraisers/ADD_ONE_FUNDRAISER';
-const SET_CATEGORIES = 'categories/SET_CATEGORIES';
+const SET_CATEGORIES = 'fundraisers/SET_CATEGORIES';
+const SET_FUNDRAISERS = 'fundraisers/SET_FUNDRAISERS';
+
+const setFundraisers = (fundraisers) => {
+  return {
+    type: SET_FUNDRAISERS,
+    fundraisers
+  };
+};
 
 const setCategories = (categories) => {
   return {
@@ -20,6 +28,14 @@ export const getCategories = () => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(setCategories(data.categories))
+  }
+};
+
+export const getFundraisers = () => async (dispatch) => {
+  const res = await fetch('/api/fundraisers');
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(setFundraisers(data.fundraisers));
   }
 };
 
@@ -74,11 +90,12 @@ const initialState = {
 export default function reducer (state = initialState, action) {
   let newState = {};
   switch (action.type) {
-    case SET_CATEGORIES:
-      newState = {
-        ...state,
-        categories: action.categories,
-      };
+    case SET_FUNDRAISERS:
+      newState = { ...state };
+      action.fundraisers.forEach(fundraiser => {
+        newState.byId[fundraiser.id] = fundraiser;
+      });
+      newState.allIds = Object.keys(newState.byId);
       return newState;
     case ADD_ONE_FUNDRAISER:
       newState = {
@@ -89,6 +106,12 @@ export default function reducer (state = initialState, action) {
         },
       };
       newState.allIds = Object.keys(newState.byId);
+      return newState;
+    case SET_CATEGORIES:
+      newState = {
+        ...state,
+        categories: action.categories,
+      };
       return newState;
     default:
       return state;

@@ -13,6 +13,9 @@ module.exports = {
         'grey-medium': '#666',
         'grey-dark': '#333',
       },
+      gridTemplateColumns: {
+        'layout': 'repeat(auto-fill, minmax(20rem, 1fr))',
+      }
     },
   },
   plugins: [],
