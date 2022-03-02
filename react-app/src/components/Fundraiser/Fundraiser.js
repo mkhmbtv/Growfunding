@@ -32,8 +32,9 @@ const Fundraiser = ({ id }) => {
           <div className="font-black mb-2">{fundraiser.name}</div>
           <p className="mb-4">{fundraiser.description.slice(0, 90)}...</p>
           <p className="text-sm text-grey-dark mb-2">Last donation {lastDonation}</p>
-          <div className={`h-1 w-full mb-2 relative after:absolute bg-slate-200 after:bg-primary 
-            after:w-[${getPercentage()}%] after:inset-0`} />
+          <div className="h-1 w-full mb-2"
+            style={getPercentage() >= 100 ? { background: "#2f9e44" }
+              : {background: `linear-gradient(to right, #2f9e44 ${getPercentage()}%, #e2e8f0 ${getPercentage()}%)`}}/>
           <div>
             <strong>${getDonationsSum().toLocaleString()} raised</strong> of ${fundraiser.goal_amount.toLocaleString()}
           </div>
