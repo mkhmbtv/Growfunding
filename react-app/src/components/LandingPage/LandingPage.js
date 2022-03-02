@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getFundraisers } from "../../store/fundraisers";
 import Fundraiser from "../Fundraiser";
+import Categories from "./Categories";
 import background from "../../images/hero.jpg";
 
 const LandingPage = () => {
@@ -40,6 +41,7 @@ const LandingPage = () => {
           ))}
         </div>
       </div>
+      <Categories />
     </div>
   )
 };
