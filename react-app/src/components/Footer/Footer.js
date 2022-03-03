@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="border-t">
       <ul className="pt-10 mx-16 pb-20 flex justify-between">
         <li>
-          <Link to='/' exact={true} className='font-logo text-xl text-primary'>
+          <Link to='/' className='font-logo text-xl text-primary'>
             GrowFunding
           </Link>
         </li>
