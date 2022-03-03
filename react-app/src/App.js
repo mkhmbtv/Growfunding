@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import NewFundraiserForm from './components/NewFundraiserForm';
 import LandingPage from './components/LandingPage';
+import Footer from './components/Footer';
 import { authenticate } from './store/session';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
             <LandingPage />
           </Route>
         </Switch>
+        <Footer />
       </BrowserRouter>
     </div>
   );

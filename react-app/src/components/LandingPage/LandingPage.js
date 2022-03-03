@@ -28,9 +28,12 @@ const LandingPage = () => {
             </span>
             <span className="text-2xl font-extrabold text-white">Get help. Give kindness. Start right now.</span>
           </h1>
-          <Link className='py-3 px-6 bg-primary rounded text-lg text-white w-full font-extrabold
+          <Link className='py-4 px-6 bg-primary rounded text-lg text-white w-full font-extrabold
               hover:bg-green-500 duration-200' 
-              to='/new-fundraiser'>Start Fundraising</Link>
+              to='/new-fundraiser'
+          >
+            Start Fundraising
+          </Link>
         </div>
       </header>
       <div className="px-40 py-16">
@@ -42,6 +45,17 @@ const LandingPage = () => {
         </div>
       </div>
       <Categories />
+      <div className="py-16">
+        <h3 className="text-center text-2xl font-light mb-4">Ready to start fundraising?</h3>
+        <div className="text-center">
+          <Link className='py-4 px-6 bg-primary rounded text-lg text-white font-extrabold
+              hover:bg-green-500 duration-200 mt-6 mb-4 inline-block w-fit'
+            to='/new-fundraiser'
+          >
+            Start Fundraising
+          </Link>
+        </div>
+      </div>
     </div>
   )
 };
