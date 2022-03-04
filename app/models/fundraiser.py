@@ -25,17 +25,29 @@ class Fundraiser(db.Model):
     category = db.relationship('Category', back_populates='fundraisers')
     donations = db.relationship('Donation', back_populates='fundraiser')
 
-    def to_dict(self):
+    def to_simple_dict(self):
         return {
             'id': self.id,
-            'user_id': self.user_id,
-            'category_id': self.category_id,
             'name': self.name,
             'city': self.city,
             'state': self.state,
             'description': self.description,
             'image_url': self.image_url,
             'goal_amount': self.goal_amount,
+            'donations': [donation.to_dict() for donation in self.donations]
+        }
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'city': self.city,
+            'state': self.state,
+            'description': self.description,
+            'image_url': self.image_url,
+            'goal_amount': self.goal_amount,
+            'organizer': self.organizer.to_dict(),
+            'category': self.category.to_dict(),
             'donations': [donation.to_dict() for donation in self.donations],
             'created_at': self.created_at,
             'updated_at': self.updated_at

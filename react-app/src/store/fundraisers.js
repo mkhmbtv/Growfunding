@@ -39,6 +39,14 @@ export const getFundraisers = () => async (dispatch) => {
   }
 };
 
+export const getOneFundraiser = (id) => async (dispatch) => {
+  const res = await fetch(`/api/fundraisers/${id}`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(addOneFundraiser(data));
+  }
+};
+
 export const createFundraiser = (fundraiser) => async (dispatch) => {
   const {
     userId,
