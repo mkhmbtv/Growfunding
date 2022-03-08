@@ -8,6 +8,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import NewFundraiserForm from './components/NewFundraiserForm';
 import LandingPage from './components/LandingPage';
 import Footer from './components/Footer';
+import FundraiserDetail from './components/FundraiserDetail';
 import { authenticate } from './store/session';
 
 function App() {
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route path='/sign-up' exact={true}>
             <SignUpForm />
+          </Route>
+          <Route path='/fundraisers/:id' exact={true}>
+            <FundraiserDetail />
           </Route>
           <ProtectedRoute path='/new-fundraiser' exact={true}>
             <NewFundraiserForm />

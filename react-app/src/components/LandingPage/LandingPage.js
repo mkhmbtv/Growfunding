@@ -11,9 +11,8 @@ const LandingPage = () => {
   const fundraiserIds = useSelector(state => state.fundraisers.allIds);
 
   useEffect(() => {
-    if (fundraiserIds.length > 0) return;
     dispatch(getFundraisers());
-  }, [dispatch, fundraiserIds]);
+  }, [dispatch]);
 
   return (
     <div>

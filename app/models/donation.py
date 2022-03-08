@@ -24,11 +24,11 @@ class Donation(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'user_id': self.user_id,
             'fundraiser_id': self.fundraiser_id,
             'amount': self.amount,
             'comment': self.comment,
             'anonymous': self.anonymous,
+            'donor': self.donor.to_dict(),
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
