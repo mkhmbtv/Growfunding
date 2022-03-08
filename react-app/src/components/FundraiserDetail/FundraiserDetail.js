@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getOneFundraiser } from "../../store/fundraisers";
 import DonationBox from "./DonationBox";
+import DonateFormModal from "../DonateFormModal";
 import moment from 'moment';
 
 const FundraiserDetail = () => {
@@ -58,11 +59,8 @@ const FundraiserDetail = () => {
           </div>
           <div className="flex items-center justify-between pb-10 mb-12 border-b border-gray-400">
             <span className="w-1/2">Please donate, if you want to support this cause.</span>
-            <div className="w-1/2 text-right">
-              <button className="py-3 mt-4 bg-secondary rounded text-white w-1/2 font-extrabold
-                hover:bg-[#38d9a9] duration-200 shadow hover:shadow-md">
-                Donate
-              </button>
+            <div className="w-1/3">
+              <DonateFormModal fundraiserId={fundraiser.id} />
             </div>
           </div>
           <div>

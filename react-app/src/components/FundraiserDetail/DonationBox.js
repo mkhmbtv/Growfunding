@@ -1,4 +1,4 @@
-
+import DonateFormModal from "../DonateFormModal";
 
 const DonationBox = ({ fundraiser, sum }) => {
   const getPercentage = () => {
@@ -19,10 +19,7 @@ const DonationBox = ({ fundraiser, sum }) => {
       />
       <div className="text-grey-light mb-2">{fundraiser.donations.length} donations</div>
       <div className="mb-4">
-        <button className="py-3 bg-secondary rounded text-white w-full font-extrabold
-                hover:bg-[#38d9a9] duration-200 shadow hover:shadow-md">
-          Donate now
-        </button>
+        <DonateFormModal fundraiserId={fundraiser.id} />
       </div>
       <h2 className="text-center text-lg font-black text-amber-500 mb-4">Top Donations</h2>
       <ul>
