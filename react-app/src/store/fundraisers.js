@@ -89,6 +89,41 @@ export const createFundraiser = (fundraiser) => async (dispatch) => {
   
 };
 
+export const donate = (donation) => async (dispatch) => {
+  const {
+    userId,
+    fundraiserId,
+    amount,
+    comment,
+    anonymous,
+  } = donation;
+
+  const form = new FormData();
+  form.append('user_id', userId);
+  form.append('fundraiser_id', fundraiserId);
+  form.append('amount', amount);
+  form.append('comment', comment);
+  form.append('anonymous', anonymous);
+
+  const res = await fetch('/api/donations/', {
+    method: 'POST',
+    body: form,
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(addOneFundraiser(data));
+    return null;
+  } else if (res.status < 500) {
+    const data = await res.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ['An error occurred. Please try again.'];
+  }
+};
+
 const initialState = {
   byId: {},
   allIds: [],
