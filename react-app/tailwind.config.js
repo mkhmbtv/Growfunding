@@ -13,6 +13,7 @@ module.exports = {
         'grey-light': '#767676',
         'grey-medium': '#666',
         'grey-dark': '#333',
+        'black-rgba': 'rgba(0, 0, 0, 0.7)',
       },
       gridTemplateColumns: {
         'layout': 'repeat(auto-fill, minmax(20rem, 1fr))',
