@@ -37,12 +37,10 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
     <Redirect to="/login" />
   );
 
-  console.log(fundraiserId)
-
   return (
-    <div>
+    <div className="p-6">
       <form onSubmit={onSubmit}>
-        <h2>Donate</h2>
+        <h2 className='text-center text-4xl mb-5 font-black'>Leave a donation</h2>
         <div className="mb-4">
           {errors.map((error, ind) => (
             <div className='text-rose-700' key={ind}>{error}</div>
@@ -51,6 +49,7 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
         <div>
           <label className="block" htmlFor="amount">Donation amount</label>
           <input
+            className="p-2 border focus:outline-none rounded-sm mb-4 w-full"
             name="amount"
             type="number"
             placeholder="Enter your donation"
@@ -60,9 +59,10 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
         </div>
         <div>
           <label className="block" htmlFor="comment">Add a message (optional)</label>
-          <input
+          <textarea
+            className='p-2 border focus:outline-none rounded-sm mb-4 w-full'
             name="comment"
-            type="text"
+            rows={5}
             placeholder="Your message"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
@@ -70,6 +70,7 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
         </div>
         <label>
           <input
+            className="mr-2"
             name="anonymous"
             type="checkbox"
             defaultChecked={anonymous}
@@ -78,7 +79,9 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
           Don't display my name publicly on the campaign.
         </label>
         <div>
-          <button type="submit">
+          <button
+            className='py-3 mt-8 border border-primary rounded text-primary w-full font-extrabold'
+            type="submit">
             Donate now
           </button>
         </div>
