@@ -21,20 +21,24 @@ const DonationBox = ({ fundraiser, sum }) => {
       <div className="mb-4">
         <DonateFormModal fundraiserId={fundraiser.id} />
       </div>
-      <h2 className="text-center text-lg font-black text-amber-500 mb-4">Top Donations</h2>
-      <ul>
-        {topDonations.map(donation => (
-          <li className="flex items-center mb-2 border-b pb-2 last:border-b-0" key={donation.id}>
-            <div className="flex items-center text-primary text-4xl mr-1">
-              <ion-icon name="leaf-outline"></ion-icon>
-            </div>
-            <div>
-              <span className="block">{donation.anonymous ? 'Anonymous' : `${donation.donor.first_name} ${donation.donor.last_name}`}</span>
-              <span className="text-sm font-bold">${donation.amount}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {fundraiser.donations.length > 0 && (
+        <>
+          <h2 className="text-center text-lg font-black text-amber-500 mb-4">Top Donations</h2>
+          <ul>
+            {topDonations.map(donation => (
+              <li className="flex items-center mb-2 border-b pb-2 last:border-b-0" key={donation.id}>
+                <div className="flex items-center text-primary text-4xl mr-1">
+                  <ion-icon name="leaf-outline"></ion-icon>
+                </div>
+                <div>
+                  <span className="block">{donation.anonymous ? 'Anonymous' : `${donation.donor.first_name} ${donation.donor.last_name}`}</span>
+                  <span className="text-sm font-bold">${donation.amount}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   )
  

@@ -29,7 +29,7 @@ export const Modal = ({ onClose, children }) => {
   return ReactDOM.createPortal(
     <div className="fixed inset-0 flex justify-center items-center">
       <div className="fixed inset-0 bg-black-rgba" onClick={onClose} />
-      <div className="absolute bg-white">{children}</div>
+      <div className="absolute bg-white w-3/6">{children}</div>
     </div>,
     modalNode
   );

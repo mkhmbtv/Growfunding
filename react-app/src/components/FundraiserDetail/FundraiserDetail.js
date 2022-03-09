@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { getOneFundraiser } from "../../store/fundraisers";
 import DonationBox from "./DonationBox";
 import DonateFormModal from "../DonateFormModal";
+import EditFundraiserModal from "../EditFundraiserModal";
 import moment from 'moment';
 
 const FundraiserDetail = () => {
@@ -11,6 +12,7 @@ const FundraiserDetail = () => {
   
   const dispatch = useDispatch();
   const fundraiser = useSelector(state => state.fundraisers.byId[id]);
+  const user = useSelector(state => state.session.user);
 
   useEffect(() => {
     dispatch(getOneFundraiser(id));
@@ -48,7 +50,7 @@ const FundraiserDetail = () => {
           </div>
           <div className="border-t border-b border-gray-400 py-4 mb-6">
             <h3>
-              <span className="inline-block after:pr-4 after:border-r after:border-grey-light">{moment(fundraiser.created_at).fromNow()}</span>
+              <span className="inline-block after:pr-4 after:border-r after:border-grey-light">Created {moment(fundraiser.created_at).fromNow()}</span>
               <Link className="ml-4" to={`/fundraisers/${fundraiser.category.name.toLowerCase()}`}>
                 {fundraiser.category.name}
               </Link>
@@ -57,12 +59,19 @@ const FundraiserDetail = () => {
           <div className="mb-6 pb-12">
             <p>{fundraiser.description}</p>
           </div>
-          <div className="flex items-center justify-between pb-10 mb-12 border-b border-gray-400">
+          <div className="flex items-center justify-between pb-10 mb-10 border-b border-gray-400">
             <span className="w-1/2">Please donate, if you want to support this cause.</span>
             <div className="w-1/3">
               <DonateFormModal fundraiserId={fundraiser.id} />
             </div>
           </div>
+          {user && user.id === fundraiser.organizer.id && (
+            <div className="flex mb-12">
+              <div className="w-1/2">
+                <EditFundraiserModal fundraiser={fundraiser} />
+              </div>
+            </div>
+          )}
           <div>
             <h2 className="font-black text-2xl mb-8">Words of support ({fundraiser.donations.length})</h2>
               <ul>
