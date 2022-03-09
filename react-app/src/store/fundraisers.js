@@ -89,6 +89,46 @@ export const createFundraiser = (fundraiser) => async (dispatch) => {
   
 };
 
+export const editFundraiser = (fundraiser) => async (dispatch) => {
+  const {
+    id,
+    userId,
+    categoryId,
+    name,
+    city,
+    state,
+    description,
+    image,
+    goalAmount,
+  } = fundraiser;
+
+  const form = new FormData();
+  form.append('user_id', userId);
+  form.append('category_id', categoryId);
+  form.append('name', name);
+  form.append('city', city);
+  form.append('state', state);
+  form.append('description', description);
+  form.append('image', image);
+  form.append('goal_amount', goalAmount);
+
+  const res = await fetch(`/api/fundraisers/${id}`, {
+    method: 'PUT',
+    body: form
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(addOneFundraiser(data));
+    return null;
+  } else if (res.status < 500) {
+    const data = await res.json();
+    if (data.errors) return data.errors;
+  } else {
+    return ['An error occurred. Please try again.'];
+  }
+};
+
 export const donate = (donation) => async (dispatch) => {
   const {
     userId,
