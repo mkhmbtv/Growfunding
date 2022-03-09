@@ -54,3 +54,26 @@ def create_fundraiser():
         else:
             return {"errors": ["No image attached"]}, 401
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+@fund_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_fundraiser(id):
+    fundraiser = Fundraiser.query.get(id)
+    form = CreateFundraiser()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        if "image" in request.files:
+            image = request.files['image']
+            if allowed_file(image.filename):
+                image_url = upload_file_to_s3(image, Config.S3_BUCKET)
+                form.populate_obj(fundraiser)
+                fundraiser.image_url = image_url
+                db.session.commit()
+                return fundraiser.to_dict()
+            else:
+                return {"errors": ["Unsupported image format"]}, 401
+        else:
+            return {"errors": ["No image attached"]}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
