@@ -1,3 +1,4 @@
+from crypt import methods
 import boto3
 import botocore
 from flask import Blueprint, jsonify, request
@@ -28,7 +29,7 @@ def fundraisers():
 
 @fund_routes.route('/<int:id>')
 def fundraiser(id):
-    fundraiser = Fundraiser.query.get_or_404(id)
+    fundraiser = Fundraiser.query.get(id)
     return fundraiser.to_dict()
 
 
@@ -64,7 +65,7 @@ def edit_fundraiser(id):
 
     if form.validate_on_submit():
         image_url = fundraiser.image_url
-        
+    
         if "image" in request.files:
             image = request.files['image']
             if allowed_file(image.filename):
@@ -76,3 +77,11 @@ def edit_fundraiser(id):
         db.session.commit()
         return fundraiser.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+@fund_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_fundraiser(id):
+    Fundraiser.query.filter_by(id=id).delete()
+    db.session.commit()
+    return {"message": "success"}
