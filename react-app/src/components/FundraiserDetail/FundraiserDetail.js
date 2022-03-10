@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { getOneFundraiser } from "../../store/fundraisers";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { getOneFundraiser, deleteFundraiser } from "../../store/fundraisers";
 import DonationBox from "./DonationBox";
 import DonateFormModal from "../DonateFormModal";
 import EditFundraiserModal from "../EditFundraiserModal";
@@ -11,12 +11,18 @@ const FundraiserDetail = () => {
   const { id } = useParams();
   
   const dispatch = useDispatch();
+  const history = useHistory();
   const fundraiser = useSelector(state => state.fundraisers.byId[id]);
   const user = useSelector(state => state.session.user);
 
   useEffect(() => {
     dispatch(getOneFundraiser(id));
   }, [dispatch, id]);
+
+  const onDelete = () => {
+    dispatch(deleteFundraiser(fundraiser.id));
+    history.push('/');
+  };
 
   const getDonationsSum = () => {
     let sum = 0;
@@ -66,9 +72,17 @@ const FundraiserDetail = () => {
             </div>
           </div>
           {user && user.id === fundraiser.organizer.id && (
-            <div className="flex mb-12">
+            <div className="flex mb-12 gap-8">
               <div className="w-1/2">
                 <EditFundraiserModal fundraiser={fundraiser} />
+              </div>
+              <div className="w-1/2">
+                <button className="py-3 border border-rose-500 rounded text-rose-500 w-full font-extrabold
+                hover:bg-rose-500 hover:text-white duration-200"
+                  onClick={onDelete}
+                >
+                  Delete Fundraiser
+                </button>
               </div>
             </div>
           )}

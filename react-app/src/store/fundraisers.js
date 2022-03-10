@@ -1,6 +1,8 @@
 const ADD_ONE_FUNDRAISER = 'fundraisers/ADD_ONE_FUNDRAISER';
 const SET_CATEGORIES = 'fundraisers/SET_CATEGORIES';
 const SET_FUNDRAISERS = 'fundraisers/SET_FUNDRAISERS';
+const REMOVE_ONE_FUNDRAISER = 'fundraisers/REMOVE_ONE_FUNDRAISER';
+const SET_ORDER = 'fundraisers/SET_ORDER';
 
 const setFundraisers = (fundraisers) => {
   return {
@@ -16,11 +18,25 @@ const setCategories = (categories) => {
   };
 };
 
+const setOrder = (list) => {
+  return {
+    type: SET_ORDER,
+    list
+  };
+};
+
 const addOneFundraiser = (fundraiser) => {
   return {
     type: ADD_ONE_FUNDRAISER,
     fundraiser
-  }
+  };
+};
+
+const removeOneFundraiser = (id) => {
+  return {
+    type: REMOVE_ONE_FUNDRAISER,
+    id
+  };
 };
 
 export const getCategories = () => async (dispatch) => {
@@ -35,7 +51,7 @@ export const getFundraisers = () => async (dispatch) => {
   const res = await fetch('/api/fundraisers');
   if (res.ok) {
     const data = await res.json();
-    dispatch(setFundraisers(data.fundraisers));
+    dispatch(setFundraisers(data));
   }
 };
 
@@ -77,7 +93,7 @@ export const createFundraiser = (fundraiser) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json()
     dispatch(addOneFundraiser(data));
-    return null;
+    return data;
   } else if (res.status < 500) {
     const data = await res.json();
     if (data.errors) {
@@ -129,6 +145,11 @@ export const editFundraiser = (fundraiser) => async (dispatch) => {
   }
 };
 
+export const deleteFundraiser = (id) => async (dispatch) => {
+  const res = await fetch(`/api/fundraisers/${id}`, { method: 'DELETE' });
+  if (res.ok) dispatch(removeOneFundraiser(id));
+};
+
 export const donate = (donation) => async (dispatch) => {
   const {
     userId,
@@ -164,9 +185,18 @@ export const donate = (donation) => async (dispatch) => {
   }
 };
 
+export const getFundraisersOrder = () => async (dispatch) => {
+  const res = await fetch('/api/fundraisers/top');
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(setOrder(data));
+    return data;
+  }
+};
+
 const initialState = {
   byId: {},
-  allIds: [],
+  order: [],
   categories: [],
 };
 
@@ -174,11 +204,7 @@ export default function reducer (state = initialState, action) {
   let newState = {};
   switch (action.type) {
     case SET_FUNDRAISERS:
-      newState = { ...state };
-      action.fundraisers.forEach(fundraiser => {
-        newState.byId[fundraiser.id] = fundraiser;
-      });
-      newState.allIds = Object.keys(newState.byId);
+      newState = { ...state, byId: { ...action.fundraisers } };
       return newState;
     case ADD_ONE_FUNDRAISER:
       newState = {
@@ -188,8 +214,17 @@ export default function reducer (state = initialState, action) {
           [action.fundraiser.id]: action.fundraiser,
         },
       };
-      newState.allIds = Object.keys(newState.byId);
       return newState;
+    case REMOVE_ONE_FUNDRAISER:
+      newState = { ...state };
+      delete newState.byId[action.id];
+      return newState;
+    case SET_ORDER:
+      newState = {
+        ...state,
+        order: action.list
+      };
+      return newState
     case SET_CATEGORIES:
       newState = {
         ...state,

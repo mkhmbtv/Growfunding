@@ -17,13 +17,11 @@ const Fundraiser = ({ id }) => {
     return (getDonationsSum() / fundraiser.goal_amount) * 100;
   };
   
-  const lastDonation = moment(fundraiser.donations[fundraiser.donations.length - 1].created_at).fromNow();
-
   if (!fundraiser) return null;
-
+  
   return (
     <div className="rounded overflow-hidden shadow-md">
-      <Link to={`/fundraisers/${id}`}>
+      <Link to={`/fundraisers/${fundraiser.id}`}>
         <img className="h-48 w-full object-cover" src={fundraiser.image_url} alt="" />
         <div className="p-4">
           <div className="text-primary text-sm font-black">
@@ -31,7 +29,11 @@ const Fundraiser = ({ id }) => {
           </div>
           <div className="font-black mb-2">{fundraiser.name}</div>
           <p className="mb-4">{fundraiser.description.slice(0, 90)}...</p>
-          <p className="text-sm text-grey-dark mb-2">Last donation {lastDonation}</p>
+          {fundraiser.donations.length > 0 && (
+            <p className="text-sm text-grey-dark mb-2">
+              Last donation {moment(fundraiser.donations.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[fundraiser.donations.length - 1].created_at).fromNow()}
+            </p>
+          )}
           <div className="h-1 w-full mb-2"
             style={getPercentage() >= 100 ? { background: "#2f9e44" }
               : {background: `linear-gradient(to right, #2f9e44 ${getPercentage()}%, #e2e8f0 ${getPercentage()}%)`}}/>

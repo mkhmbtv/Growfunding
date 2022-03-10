@@ -1,17 +1,20 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getFundraisers } from "../../store/fundraisers";
+import { getFundraisers, getFundraisersOrder } from "../../store/fundraisers";
 import Fundraiser from "../Fundraiser";
 import Categories from "./Categories";
 import background from "../../images/hero.jpg";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  const fundraiserIds = useSelector(state => state.fundraisers.allIds);
+  const fundraiserIds = useSelector(state => state.fundraisers.order);
 
   useEffect(() => {
-    dispatch(getFundraisers());
+    (async () => {
+      await dispatch(getFundraisers());
+      await dispatch(getFundraisersOrder());
+    })()
   }, [dispatch]);
 
   return (

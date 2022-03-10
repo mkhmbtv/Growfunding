@@ -1,9 +1,7 @@
-from crypt import methods
 import boto3
 import botocore
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from sqlalchemy.orm import joinedload
 
 from app.config import Config
 from app.aws_s3 import *
@@ -16,15 +14,19 @@ fund_routes = Blueprint('fundraisers', __name__)
 
 @fund_routes.route('/')
 def fundraisers():
+    fundraisers = Fundraiser.query.limit(20).all()
+    return {fundraiser.id: fundraiser.to_dict() for fundraiser in fundraisers}
+
+
+@fund_routes.route('/top')
+def top_fundraisers():
     fundraisers = Fundraiser.query \
-                            .outerjoin(Donation) \
-                            .group_by(Fundraiser.id, Donation.created_at) \
-                            .order_by(db.func.count(Donation.id).desc(), Donation.created_at) \
-                            .options(joinedload(Fundraiser.donations)) \
-                            .limit(10) \
-                            .all()
-    funds = [fundraiser.to_simple_dict() for fundraiser in fundraisers]
-    return {'fundraisers': funds}
+                    .outerjoin(Donation) \
+                    .group_by(Fundraiser.id, Donation.created_at) \
+                    .order_by(db.func.count(Donation.id).desc(), Donation.created_at.desc()) \
+                    .limit(6) \
+                    .all()
+    return jsonify([fundraiser.id for fundraiser in fundraisers])
 
 
 @fund_routes.route('/<int:id>')

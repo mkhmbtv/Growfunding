@@ -15,7 +15,7 @@ const NewFundraiserForm = () => {
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
-  const categories = useSelector(state => state.fundraisers.categories)
+  const categories = useSelector(state => state.fundraisers.categories);
   const history = useHistory();
 
   useEffect(() => {
@@ -37,10 +37,10 @@ const NewFundraiserForm = () => {
     }
     const data = await dispatch(createFundraiser(fundraiser));
 
-    if (data) {
-      setErrors(data)
+    if (Array.isArray(data)) {
+      setErrors(data);
     } else {
-      history.push('/')
+      history.push(`/fundraisers/${data.id}`);
     }
   }
 
