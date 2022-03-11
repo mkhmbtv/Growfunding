@@ -5,7 +5,7 @@ from flask_login import login_required
 
 from app.config import Config
 from app.aws_s3 import *
-from app.models import db, Fundraiser, Donation
+from app.models import db, Fundraiser, Donation, Category
 from app.forms import CreateFundraiser
 from app.helpers import validation_errors_to_error_messages
 
@@ -27,6 +27,14 @@ def top_fundraisers():
                     .limit(6) \
                     .all()
     return jsonify([fundraiser.id for fundraiser in fundraisers])
+
+
+@fund_routes.route('/<category>')
+def fundraisers_by_category(category):
+    fundraisers = Fundraiser.query.join(Category) \
+                            .filter(Category.name == category.capitalize()) \
+                            .all()
+    return {fundraiser.id: fundraiser.to_dict() for fundraiser in fundraisers}
 
 
 @fund_routes.route('/<int:id>')
