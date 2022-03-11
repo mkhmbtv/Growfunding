@@ -55,6 +55,15 @@ export const getFundraisers = () => async (dispatch) => {
   }
 };
 
+export const getFundraisersByCategory = (category) => async (dispatch) => {
+  const res = await fetch(`/api/fundraisers/${category}`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(setFundraisers(data));
+    return data;
+  }
+};
+
 export const getOneFundraiser = (id) => async (dispatch) => {
   const res = await fetch(`/api/fundraisers/${id}`);
   if (res.ok) {
@@ -204,7 +213,7 @@ export default function reducer (state = initialState, action) {
   let newState = {};
   switch (action.type) {
     case SET_FUNDRAISERS:
-      newState = { ...state, byId: { ...action.fundraisers } };
+      newState = { ...state, byId: { ...state.byId, ...action.fundraisers } };
       return newState;
     case ADD_ONE_FUNDRAISER:
       newState = {
