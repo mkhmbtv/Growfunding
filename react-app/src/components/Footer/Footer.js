@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="border-t">
-      <ul className="pt-10 mx-16 pb-20 flex justify-between">
+      <ul className="pt-10 mx-28 pb-20 flex justify-between">
         <li>
           <Link to='/' className='font-logo text-xl text-primary'>
             GrowFunding

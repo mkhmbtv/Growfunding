@@ -35,7 +35,7 @@ const FundraiserDetail = () => {
   if (!fundraiser || !fundraiser.donations ||!fundraiser.organizer) return null;
 
   return (
-    <div className="mx-20 mt-8">
+    <div className="mx-28 mt-8">
       <h1 className="text-3xl font-bold mb-4">{fundraiser.name}</h1>
       <div className="grid grid-cols-6 gap-6 grid-rows-[412px_auto]" style={{alignItems: "start"}}>
         <div className="col-span-4 row-span-1 h-full w-full">

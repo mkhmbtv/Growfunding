@@ -8,7 +8,8 @@ import background from "../../images/hero.jpg";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  const fundraiserIds = useSelector(state => state.fundraisers.order);
+  const fundraisers = useSelector(state => state.fundraisers.byId);
+  const topFundraisersIds = useSelector(state => state.fundraisers.order);
 
   useEffect(() => {
     (async () => {
@@ -23,7 +24,7 @@ const LandingPage = () => {
         className="h-[85vh] bg-cover bg-center opacity-90 relative"
         style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${background})`}}
       >
-        <div className="absolute top-[35%] left-24">
+        <div className="absolute top-[35%] left-28">
           <h1 className="mb-11">
             <span className="block text-5xl font-black text-white mb-4 w-2/3 leading-tight">
               Trusted fundraising for all of life's moments
@@ -38,11 +39,11 @@ const LandingPage = () => {
           </Link>
         </div>
       </header>
-      <div className="px-40 py-16">
+      <div className="px-28 py-16">
         <h2 className="mb-8 text-2xl font-black">Top Fundraisers</h2>
         <div className="grid grid-cols-layout gap-8">
-          {fundraiserIds.slice(0, 3).map(id => (
-            <Fundraiser key={id} id={id} />
+          {topFundraisersIds.slice(0, 3).map(id => (
+            <Fundraiser key={id} fundraiser={fundraisers[id]} />
           ))}
         </div>
       </div>

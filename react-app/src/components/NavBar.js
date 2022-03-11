@@ -33,7 +33,7 @@ const NavBar = () => {
 
   return (
     <nav className='h-16 shadow bg-white sticky top-0 z-50'>
-      <ul className='list-none flex items-center justify-between h-full mx-16'>
+      <ul className='list-none flex items-center justify-between h-full mx-28'>
         <div>
           <li className='pr-4'>
             <NavLink to='/' exact={true} className='font-logo text-2xl text-primary'>

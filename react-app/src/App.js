@@ -9,6 +9,7 @@ import NewFundraiserForm from './components/NewFundraiserForm';
 import LandingPage from './components/LandingPage';
 import Footer from './components/Footer';
 import FundraiserDetail from './components/FundraiserDetail';
+import FundraisersByCategory from './components/FundraisersByCategory';
 import { authenticate } from './store/session';
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path='/fundraisers/:id' exact={true}>
             <FundraiserDetail />
+          </Route>
+          <Route path='/f/:category' exact={true}>
+            <FundraisersByCategory />
           </Route>
           <ProtectedRoute path='/new-fundraiser' exact={true}>
             <NewFundraiserForm />

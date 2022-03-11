@@ -2,9 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from 'moment';
 
-const Fundraiser = ({ id }) => {
-  const fundraiser = useSelector(state => state.fundraisers.byId[id]);
-
+const Fundraiser = ({ fundraiser }) => {
   const getDonationsSum = () => {
     let sum = 0;
     fundraiser.donations.forEach(f => {
@@ -28,12 +26,13 @@ const Fundraiser = ({ id }) => {
             {fundraiser.city.toUpperCase()}, {fundraiser.state.toUpperCase()}
           </div>
           <div className="font-black mb-2">{fundraiser.name}</div>
-          <p className="mb-4">{fundraiser.description.slice(0, 90)}...</p>
-          {fundraiser.donations.length > 0 && (
-            <p className="text-sm text-grey-dark mb-2">
-              Last donation {moment(fundraiser.donations.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[fundraiser.donations.length - 1].created_at).fromNow()}
-            </p>
-          )}
+          <p className="mb-4">{fundraiser.description.slice(0, 80)}...</p>
+          <p className="text-sm text-grey-dark mb-2">
+            {fundraiser.donations.length > 0
+              ? `Last donation ${moment(fundraiser.donations.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[fundraiser.donations.length - 1].created_at).fromNow()}`
+              : 'No donations yet'
+            }
+          </p>
           <div className="h-1 w-full mb-2"
             style={getPercentage() >= 100 ? { background: "#2f9e44" }
               : {background: `linear-gradient(to right, #2f9e44 ${getPercentage()}%, #e2e8f0 ${getPercentage()}%)`}}/>

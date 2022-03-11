@@ -37,7 +37,7 @@ const Categories = () => {
       <h2 className="mb-12 text-2xl font-black text-center">Browse by fundraising category</h2>
       <div className="grid grid-cols-4 gap-y-7 justify-items-center">
         {categories.map(category => (
-          <Link key={category.id} to={`/fundraisers/${category.name.toLowerCase()}`}>
+          <Link key={category.id} to={`/f/${category.name.toLowerCase()}`}>
             <div className="flex flex-col items-center">
               <span className="text-primary text-4xl"><Icon name={category.name} /></span>
               <span className="ml-2 duration-200 hover:text-primary">{category.name}</span>
