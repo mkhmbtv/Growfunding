@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
+import LogoutButton from '../auth/LogoutButton';
+import SearchButton from './SearchButton';
 
 const NavBar = () => {
   const user = useSelector(state => state.session.user)
@@ -34,14 +34,14 @@ const NavBar = () => {
   return (
     <nav className='h-16 shadow bg-white sticky top-0 z-50'>
       <ul className='list-none flex items-center justify-between h-full mx-28'>
-        <div>
-          <li className='pr-4'>
+        <div className="flex items-center">
+          <li className='pr-8'>
             <NavLink to='/' exact={true} className='font-logo text-2xl text-primary'>
               GrowFunding
             </NavLink>
           </li>
+          <li><SearchButton /></li>
         </div>
-        
         <div className='flex'>
           {sessionLinks}
           <li className='pl-4'>
