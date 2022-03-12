@@ -6,7 +6,7 @@ from sqlalchemy import or_
 
 from app.config import Config
 from app.aws_s3 import *
-from app.models import db, Fundraiser, Donation, Category
+from app.models import db, Fundraiser, Donation, Category, User
 from app.forms import CreateFundraiser
 from app.helpers import validation_errors_to_error_messages
 
@@ -48,13 +48,16 @@ def fundraiser(id):
 @fund_routes.route('/search')
 def search_fundraisers():
     q = request.args.get('q')
-    fundraisers = Fundraiser.query \
-                            .filter(or_(db.func.lower(Fundraiser.name)
-                                        .like(f'%{q.lower()}%'),
-                                        db.func.lower(Fundraiser.city)
-                                        .like(f'%{q.lower()}%'),
-                                        db.func.lower(Fundraiser.state)
-                                        .like(f'%{q.lower()}%'))) \
+    if not q or q == ' ':
+        return {}
+    fundraisers = Fundraiser.query.join(User) \
+                            .filter(or_(Fundraiser.name.ilike(f'%{q}%'),
+                                        Fundraiser.city.ilike(f'%{q}%'),
+                                        Fundraiser.state.ilike(f'%{q}%'),
+                                        User.first_name.ilike(f'{q}%'),
+                                        User.last_name.ilike(f'{q}%')
+                                        )
+                                    ) \
                             .all()
     return {fundraiser.id: fundraiser.to_dict() for fundraiser in fundraisers}
 
