@@ -2,6 +2,7 @@ import boto3
 import botocore
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
+from sqlalchemy import or_
 
 from app.config import Config
 from app.aws_s3 import *
@@ -23,7 +24,8 @@ def top_fundraisers():
     fundraisers = Fundraiser.query \
                     .outerjoin(Donation) \
                     .group_by(Fundraiser.id, Donation.created_at) \
-                    .order_by(db.func.count(Donation.id).desc(), Donation.created_at.desc()) \
+                    .order_by(db.func.count(Donation.id).desc(),
+                              Donation.created_at.desc()) \
                     .limit(6) \
                     .all()
     return jsonify([fundraiser.id for fundraiser in fundraisers])
@@ -41,6 +43,20 @@ def fundraisers_by_category(category):
 def fundraiser(id):
     fundraiser = Fundraiser.query.get(id)
     return fundraiser.to_dict()
+
+
+@fund_routes.route('/search')
+def search_fundraisers():
+    q = request.args.get('q')
+    fundraisers = Fundraiser.query \
+                            .filter(or_(db.func.lower(Fundraiser.name)
+                                        .like(f'%{q.lower()}%'),
+                                        db.func.lower(Fundraiser.city)
+                                        .like(f'%{q.lower()}%'),
+                                        db.func.lower(Fundraiser.state)
+                                        .like(f'%{q.lower()}%'))) \
+                            .all()
+    return {fundraiser.id: fundraiser.to_dict() for fundraiser in fundraisers}
 
 
 @fund_routes.route('/', methods=['POST'])
@@ -75,7 +91,7 @@ def edit_fundraiser(id):
 
     if form.validate_on_submit():
         image_url = fundraiser.image_url
-    
+
         if "image" in request.files:
             image = request.files['image']
             if allowed_file(image.filename):
