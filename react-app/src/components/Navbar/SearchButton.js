@@ -32,7 +32,7 @@ const SearchButton = () => {
         </div>
       </button>
       {showSearch && (
-        <SearchBar />
+        <SearchBar onOpenBar={setShowSearch}/>
       )}
     </div>
   )

@@ -1,17 +1,23 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const SearchBar = () => {
-  const dispatch = useDispatch();
+const SearchBar = ({ onOpenBar }) => {
+  const history = useHistory();
   const [searchWord, setSearchWord] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
+    if (searchWord.length > 0 && searchWord !== ' ') {
+      onOpenBar(false);
+      history.replace({
+        pathname: '/search',
+        search: '?q=' + searchWord,
+      });
+    }
   };
 
   return (
-    <div className="absolute top-0 left-0 h-36 w-full bg-white flex items-center">
+    <div className="absolute top-0 left-0 h-36 w-full bg-white flex items-center shadow">
       <form className="w-full mx-28" onSubmit={onSubmit}>
         <div className="flex pb-2">
           <span className="text-lg flex items-center justify-center mr-1.5">

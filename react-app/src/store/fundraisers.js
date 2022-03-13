@@ -159,13 +159,6 @@ export const deleteFundraiser = (id) => async (dispatch) => {
   if (res.ok) dispatch(removeOneFundraiser(id));
 };
 
-export const searchFundraisers = (keyword) => async(dispatch) => {
-  const res = await fetch(`/api/fundraisers/search?q=${keyword}`);
-  const data = await res.json();
-  dispatch(setFundraisers(data));
-  return data;
-};
-
 export const donate = (donation) => async (dispatch) => {
   const {
     userId,
@@ -240,7 +233,7 @@ export default function reducer (state = initialState, action) {
         ...state,
         order: action.list
       };
-      return newState
+      return newState;
     case SET_CATEGORIES:
       newState = {
         ...state,

@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import FundraiserDetail from './components/FundraiserDetail';
 import FundraisersByCategory from './components/FundraisersByCategory';
 import { authenticate } from './store/session';
+import SearchResults from './components/SearchResults';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -43,6 +44,9 @@ function App() {
           </Route>
           <Route path='/f/:category' exact={true}>
             <FundraisersByCategory />
+          </Route>
+          <Route path='/search' exact={true}>
+            <SearchResults />
           </Route>
           <ProtectedRoute path='/new-fundraiser' exact={true}>
             <NewFundraiserForm />

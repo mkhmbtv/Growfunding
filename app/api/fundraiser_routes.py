@@ -59,7 +59,9 @@ def search_fundraisers():
                                         )
                                     ) \
                             .all()
-    return {fundraiser.id: fundraiser.to_dict() for fundraiser in fundraisers}
+    return {'fundraisers': [fundraiser.to_simple_dict()
+                            for fundraiser in fundraisers
+                            ]}
 
 
 @fund_routes.route('/', methods=['POST'])
