@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { donate, getOneFundraiser } from "../../store/fundraisers";
+import { donate } from "../../store/fundraisers";
 
 const DonateForm = ({ fundraiserId, handleClose }) => {
   const user = useSelector(state => state.session.user);
@@ -25,11 +25,10 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
     
     const data = await dispatch(donate(donation));
     
-    if (data) {
-      setErrors(data);
+    if (data.errors) {
+      setErrors(data.errors);
     } else {
       handleClose();
-      dispatch(getOneFundraiser(fundraiserId));
     }
   };
 

@@ -175,24 +175,61 @@ export const donate = (donation) => async (dispatch) => {
   form.append('comment', comment);
   form.append('anonymous', anonymous);
 
-  const res = await fetch('/api/donations/', {
-    method: 'POST',
-    body: form,
-  });
-
-  if (res.ok) {
+  try {
+    const res = await fetch('/api/donations/', {
+      method: 'POST',
+      body: form,
+    });
     const data = await res.json();
     dispatch(addOneFundraiser(data));
-    return null;
-  } else if (res.status < 500) {
-    const data = await res.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ['An error occurred. Please try again.'];
+    return data;
+  } catch (err) {
+    return err;
   }
 };
+
+export const changeDonation = (donation) => async (dispatch) => {
+  const {
+    id,
+    userId,
+    fundraiserId,
+    amount,
+    comment,
+    anonymous,
+  } = donation;
+
+  const form = new FormData();
+  form.append('user_id', userId);
+  form.append('fundraiser_id', fundraiserId);
+  form.append('amount', amount);
+  form.append('comment', comment);
+  form.append('anonymous', anonymous);
+
+  try {
+    const res = await fetch(`/api/donations/${id}`, {
+      method: 'PUT',
+      body: form,
+    });
+    
+    const data = await res.json();
+    dispatch(addOneFundraiser(data));
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const cancelDonation = (id) => async (dispatch) => {
+  try {
+    const res = await fetch(`/api/donations/${id}`, {
+      method: 'DELETE'
+    });
+    const data = await res.json();
+    dispatch(addOneFundraiser(data))
+  } catch (err) {
+    return err;
+  }
+} 
 
 export const getFundraisersOrder = () => async (dispatch) => {
   const res = await fetch('/api/fundraisers/top');
