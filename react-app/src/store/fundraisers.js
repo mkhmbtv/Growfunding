@@ -191,16 +191,16 @@ export const donate = (donation) => async (dispatch) => {
 export const changeDonation = (donation) => async (dispatch) => {
   const {
     id,
-    userId,
-    fundraiserId,
+    user_id,
+    fundraiser_id,
     amount,
     comment,
     anonymous,
   } = donation;
 
   const form = new FormData();
-  form.append('user_id', userId);
-  form.append('fundraiser_id', fundraiserId);
+  form.append('user_id', user_id);
+  form.append('fundraiser_id', fundraiser_id);
   form.append('amount', amount);
   form.append('comment', comment);
   form.append('anonymous', anonymous);

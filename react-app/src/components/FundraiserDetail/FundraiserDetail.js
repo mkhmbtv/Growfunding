@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { getOneFundraiser, deleteFundraiser } from "../../store/fundraisers";
+import { getOneFundraiser, deleteFundraiser, cancelDonation } from "../../store/fundraisers";
 import DonationBox from "./DonationBox";
 import DonateFormModal from "../DonateFormModal";
 import EditFundraiserModal from "../EditFundraiserModal";
+import EditDonationModal from "../EditDonationModal";
 import moment from 'moment';
 
 const FundraiserDetail = () => {
@@ -89,17 +90,29 @@ const FundraiserDetail = () => {
           <div>
             <h2 className="font-black text-2xl mb-8">Words of support ({fundraiser.donations.length})</h2>
               <ul>
-              {fundraiser.donations.map(d => (
+              {fundraiser.donations.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map(d => (
                 <li className="flex items-start mb-10" key={d.id}>
                   <div className="flex text-primary text-5xl mr-2">
                     <ion-icon name="leaf-outline"></ion-icon>
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex-[0_0_92%] flex-col">
                     <span className="font-extrabold">
                       {d.anonymous ? `Anonymous donated $${d.amount}` : `${d.donor.first_name} ${d.donor.last_name} donated $${d.amount}`}
                     </span>
-                    <span className="mb-4">{d.comment}</span>
-                    <span className="text-sm text-grey-light">{moment(d.created_at).fromNow()}</span>
+                    <span className="block mb-4">{d.comment}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-grey-light">{moment(d.created_at).fromNow()}</span>
+                      {user.id === d.donor.id && (
+                        <div>
+                          <EditDonationModal donation={d} />
+                          <button 
+                            className="border-b border-rose-500 hover:bg-rose-500 hover:text-white duration-200 px-1"
+                            onClick={() => dispatch(cancelDonation(d.id))}
+                            >Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </li>
               ))}
