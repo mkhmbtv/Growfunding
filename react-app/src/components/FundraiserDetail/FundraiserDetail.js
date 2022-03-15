@@ -102,7 +102,7 @@ const FundraiserDetail = () => {
                     <span className="block mb-4">{d.comment}</span>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-grey-light">{moment(d.created_at).fromNow()}</span>
-                      {user.id === d.donor.id && (
+                      {user && user.id === d.donor.id && (
                         <div>
                           <EditDonationModal donation={d} />
                           <button 
