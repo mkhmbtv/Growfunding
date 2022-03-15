@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { getOneFundraiser, deleteFundraiser, cancelDonation } from "../../store/fundraisers";
@@ -6,10 +6,12 @@ import DonationBox from "./DonationBox";
 import DonateFormModal from "../DonateFormModal";
 import EditFundraiserModal from "../EditFundraiserModal";
 import EditDonationModal from "../EditDonationModal";
+import PageNotFound from "../PageNotFound";
 import moment from 'moment';
 
 const FundraiserDetail = () => {
   const { id } = useParams();
+  const [notFound, setNotFound] = useState(false);
   
   const dispatch = useDispatch();
   const history = useHistory();
@@ -17,7 +19,13 @@ const FundraiserDetail = () => {
   const user = useSelector(state => state.session.user);
 
   useEffect(() => {
-    dispatch(getOneFundraiser(id));
+    const fetchFundraiser = async () => {
+      const data = await dispatch(getOneFundraiser(id));
+      if (data.message) {
+        setNotFound(true);
+      }
+    }
+    fetchFundraiser();
   }, [dispatch, id]);
 
   const onDelete = () => {
@@ -32,6 +40,10 @@ const FundraiserDetail = () => {
     });
     return sum;
   };
+
+  if (notFound) return (
+    <PageNotFound />
+  );
 
   if (!fundraiser || !fundraiser.donations ||!fundraiser.organizer) return null;
 

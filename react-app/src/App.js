@@ -12,6 +12,7 @@ import FundraiserDetail from './components/FundraiserDetail';
 import FundraisersByCategory from './components/FundraisersByCategory';
 import { authenticate } from './store/session';
 import SearchResults from './components/SearchResults';
+import PageNotFound from './components/PageNotFound';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -54,6 +55,7 @@ function App() {
           <Route path='/' exact={true} >
             <LandingPage />
           </Route>
+          <Route><PageNotFound /></Route>
         </Switch>
         <Footer />
       </BrowserRouter>

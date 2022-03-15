@@ -42,7 +42,10 @@ def fundraisers_by_category(category):
 @fund_routes.route('/<int:id>')
 def fundraiser(id):
     fundraiser = Fundraiser.query.get(id)
-    return fundraiser.to_dict()
+    if fundraiser:
+        return fundraiser.to_dict()
+    else:
+        return {"message": "Fundraiser not found"}
 
 
 @fund_routes.route('/search')
