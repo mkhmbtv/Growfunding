@@ -48,7 +48,7 @@ const EditFundraiserForm = ({ fundraiser, handleClose }) => {
   };
 
   return (
-    <div className="p-6 text-sm h-fit">
+    <div className="p-6">
       <h1 className="text-4xl font-black mb-8">Edit Fundraiser</h1>
       <div className="mb-4">
         {errors.map((error, ind) => (
@@ -78,35 +78,33 @@ const EditFundraiserForm = ({ fundraiser, handleClose }) => {
               required
             />
           </div>
-          <div className="flex gap-4">
-            <div className="flex flex-col w-1/2">
-              <label htmlFor='category_id'>What are you fundraising for?</label>
-              <select
-                className='p-2 border focus:outline-none rounded-sm mb-4 w-full bg-white'
-                name='category_id'
-                value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
-              >
-                <option value='' disabled>Choose a category</option>
-                {categories.map(category => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex flex-col w-1/2">
-              <label htmlFor="goal_amount">How much do you like to raise?</label>
-              <input
-                className='p-2 border focus:outline-none rounded-sm mb-4 w-full'
-                type="number"
-                name="goal_amount"
-                placeholder="Enter a goal amount"
-                value={goalAmount}
-                onChange={(e) => setGoalAmount(e.target.value)}
-                required
-              />
-            </div>
+          <div className="flex flex-col">
+            <label htmlFor='category_id'>What are you fundraising for?</label>
+            <select
+              className='p-2 border focus:outline-none rounded-sm mb-4 w-full bg-white'
+              name='category_id'
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+            >
+              <option value='' disabled>Choose a category</option>
+              {categories.map(category => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="goal_amount">How much do you like to raise?</label>
+            <input
+              className='p-2 border focus:outline-none rounded-sm mb-4 w-full'
+              type="number"
+              name="goal_amount"
+              placeholder="Enter a goal amount"
+              value={goalAmount}
+              onChange={(e) => setGoalAmount(e.target.value)}
+              required
+            />
           </div>
           <div>
             <label className="w-max inline-block px-4 py-2 mb-4 border 
