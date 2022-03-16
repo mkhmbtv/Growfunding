@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import NavBar from './components/Navbar';
-import ProtectedRoute from './components/auth/ProtectedRoute';
 import NewFundraiserForm from './components/NewFundraiserForm';
 import LandingPage from './components/LandingPage';
 import Footer from './components/Footer';
@@ -41,9 +40,9 @@ function App() {
           <Route path='/search' exact={true}>
             <SearchResults />
           </Route>
-          <ProtectedRoute path='/new-fundraiser' exact={true}>
+          <Route path='/new-fundraiser' exact={true}>
             <NewFundraiserForm />
-          </ProtectedRoute>
+          </Route>
           <Route path='/' exact={true} >
             <LandingPage />
           </Route>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from '../../context/AuthContext';
 import { donate } from "../../store/fundraisers";
@@ -12,6 +12,15 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
   const [comment, setComment] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [forbidden, setForbidden] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      setShowLoginForm(true)
+      setForbidden(true);
+      handleClose();
+    }
+  }, [setShowLoginForm, user, handleClose]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -33,11 +42,7 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
     }
   };
 
-  if (!user) {
-    handleClose();
-    setShowLoginForm(true);
-    return null;
-  }
+  if (forbidden) return null;
 
   return (
     <div className="p-6">
