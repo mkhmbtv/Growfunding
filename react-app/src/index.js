@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import configureStore from './store';
 import ModalProvider from './context/Modal';
+import AuthProvider from './context/AuthContext';
 import * as fundraiserActions from './store/fundraisers';
 
 const store = configureStore();
@@ -19,7 +20,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ModalProvider>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </ModalProvider>
     </Provider>
   </React.StrictMode>,
