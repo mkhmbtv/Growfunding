@@ -37,10 +37,10 @@ const NewFundraiserForm = () => {
     }
     const data = await dispatch(createFundraiser(fundraiser));
 
-    if (Array.isArray(data)) {
-      setErrors(data);
-    } else {
+    if (!data.errors) {
       history.push(`/fundraisers/${data.id}`);
+    } else {
+      setErrors(data.errors);
     }
   }
 

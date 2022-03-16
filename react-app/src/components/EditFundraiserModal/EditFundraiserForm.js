@@ -35,10 +35,10 @@ const EditFundraiserForm = ({ fundraiser, handleClose }) => {
     }
     const data = await dispatch(editFundraiser(payload));
 
-    if (data) {
-      setErrors(data);
-    } else {
+    if (!data.errors) {
       handleClose();
+    } else {
+      setErrors(data.errors);
     }
   }
 
@@ -109,7 +109,7 @@ const EditFundraiserForm = ({ fundraiser, handleClose }) => {
           <div>
             <label className="w-max inline-block px-4 py-2 mb-4 border 
             border-primary rounded text-primary font-medium cursor-pointer">
-              Add a cover image
+              Change a cover image
               <input
                 className="hidden"
                 type="file"

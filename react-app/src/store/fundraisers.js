@@ -98,22 +98,16 @@ export const createFundraiser = (fundraiser) => async (dispatch) => {
   form.append('image', image);
   form.append('goal_amount', goalAmount);
 
-  const res = await fetch('/api/fundraisers/', {
-    method: 'POST',
-    body: form
-  });
-
-  if (res.ok) {
+  try {
+    const res = await fetch('/api/fundraisers/', {
+      method: 'POST',
+      body: form
+    });
     const data = await res.json()
     dispatch(addOneFundraiser(data));
     return data;
-  } else if (res.status < 500) {
-    const data = await res.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ['An error occurred. Please try again.'];
+  } catch (err) {
+    return err;
   }
   
 };
@@ -141,20 +135,16 @@ export const editFundraiser = (fundraiser) => async (dispatch) => {
   form.append('image', image);
   form.append('goal_amount', goalAmount);
 
-  const res = await fetch(`/api/fundraisers/${id}`, {
-    method: 'PUT',
-    body: form
-  });
-
-  if (res.ok) {
+  try {
+    const res = await fetch(`/api/fundraisers/${id}`, {
+      method: 'PUT',
+      body: form
+    });
     const data = await res.json();
     dispatch(addOneFundraiser(data));
-    return null;
-  } else if (res.status < 500) {
-    const data = await res.json();
-    if (data.errors) return data.errors;
-  } else {
-    return ['An error occurred. Please try again.'];
+    return data;
+  } catch (err) {
+    return err;
   }
 };
 
