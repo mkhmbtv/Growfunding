@@ -1,8 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from '../auth/LogoutButton';
+import LogoutButton from './LogoutButton';
 import SearchButton from './SearchButton';
+import LoginFormModal from '../LoginFormModal';
+import SignUpFormModal from '../SignUpFormModal';
 
 const NavBar = () => {
   const user = useSelector(state => state.session.user)
@@ -18,14 +20,10 @@ const NavBar = () => {
     sessionLinks = (
       <>
         <li className='px-4 hover:text-grey-light'>
-          <NavLink to='/login' exact={true}>
-            Login
-          </NavLink>
+          <LoginFormModal />
         </li>
         <li className='px-4 hover:text-grey-light'>
-          <NavLink to='/sign-up' exact={true}>
-            Sign Up
-          </NavLink>
+          <SignUpFormModal />
         </li>
       </>
     )

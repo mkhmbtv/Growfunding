@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import LoginForm from './components/auth/LoginForm';
-import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/Navbar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import NewFundraiserForm from './components/NewFundraiserForm';
@@ -34,12 +32,6 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Switch>
-          <Route path='/login' exact={true}>
-            <LoginForm />
-          </Route>
-          <Route path='/sign-up' exact={true}>
-            <SignUpForm />
-          </Route>
           <Route path='/fundraisers/:id' exact={true}>
             <FundraiserDetail />
           </Route>

@@ -23,7 +23,7 @@ const SearchButton = () => {
 
   return (
     <div ref={ref}>
-      <button onClick={openSearchBar}>
+      <button className="hover:text-grey-light" onClick={openSearchBar}>
         <div className="flex items-center">
           <span className="text-lg flex items-center justify-center mr-1.5">
             <ion-icon name="search-outline"></ion-icon>

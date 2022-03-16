@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useAuth } from '../../context/AuthContext';
 import { donate } from "../../store/fundraisers";
 
 const DonateForm = ({ fundraiserId, handleClose }) => {
+  const { setShowLoginForm } = useAuth();
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
@@ -32,9 +33,11 @@ const DonateForm = ({ fundraiserId, handleClose }) => {
     }
   };
 
-  if (!user) return (
-    <Redirect to="/login" />
-  );
+  if (!user) {
+    handleClose();
+    setShowLoginForm(true);
+    return null;
+  }
 
   return (
     <div className="p-6">
