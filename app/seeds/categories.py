@@ -9,7 +9,7 @@ def seed_categories():
     cat5 = Category(name="Sports")
     cat6 = Category(name="Community")
     cat7 = Category(name="Travel")
-    cat8 = Category(name="Business")
+    cat8 = Category(name="Wishes")
 
     db.session.add_all([cat1, cat2, cat3, cat4, cat5,
                         cat6, cat7, cat8])

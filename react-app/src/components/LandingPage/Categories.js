@@ -9,13 +9,13 @@ const Icon = ({ name }) => {
       {
         {
           'Animals': <ion-icon name="paw-outline"></ion-icon>,
-          'Business': <ion-icon name="briefcase-outline"></ion-icon>,
           'Creative': <ion-icon name="color-palette-outline"></ion-icon>,
           'Community': <ion-icon name="trail-sign-outline"></ion-icon>,
           'Education': <ion-icon name="book-outline"></ion-icon>,
           'Medical': <ion-icon name="fitness-outline"></ion-icon>,
           'Sports': <ion-icon name="football-outline"></ion-icon>,
-          'Travel': <ion-icon name="airplane-outline"></ion-icon>
+          'Travel': <ion-icon name="airplane-outline"></ion-icon>,
+          'Wishes': <ion-icon name="star-half-outline"></ion-icon>
         }[name]
       }
     </>

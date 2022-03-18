@@ -29,7 +29,7 @@ def seed_fundraisers():
                        state='OH',
                        image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644750360/growfunding/photo-1515621061946-eff1c2a352bd_ngcvsp.jpg',
                        goal_amount=5000)
-    fund3 = Fundraiser(user_id=4,
+    fund3 = Fundraiser(user_id=1,
                        category_id=6,
                        name='Support struggling small businesses',
                        description="""When the Covid pandemic hit, small business
@@ -57,7 +57,89 @@ def seed_fundraisers():
                        image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1644777589/growfunding/photo-1543382513-3617a90d9a46_aafqqh.jpg',
                        goal_amount=3000)
 
-    db.session.add_all([fund1, fund2, fund3, fund4])
+    fund5 = Fundraiser(user_id=5,
+                       category_id=2,
+                       name='Help our school',
+                       description="""Our school is a school for over 1000 students.
+                       Unfortunately, it's not funded enough.
+                       Your help would allow us to buy more textbooks and supplies, afford field trips
+                       and other activities.
+                       """,
+                       city='Austin',
+                       state='TX',
+                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1647623377/growfunding/neonbrand-zFSo6bnZJTw-unsplash_gajiut.jpg',
+                       goal_amount=80000)
+
+    fund6 = Fundraiser(user_id=6,
+                       category_id=3,
+                       name='Fund a documentary',
+                       description="""Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec 
+                       scelerisque vitae dolor blandit blandit. Nunc semper id risus tristique egestas.
+                       Suspendisse porta, enim id blandit tempus, turpis metus vehicula tellus, et
+                       interdum enim diam nec odio. Sed cursus velit nulla, vitae volutpat nunc bibendum at.
+                       Aliquam tempor lacinia tincidunt. Proin sed orci eget erat dapibus bibendum.
+                       Proin porta orci quis velit laoreet vestibulum. Nam volutpat ante nec pharetra interdum.
+                       """,
+                       city='Manchester',
+                       state='UK',
+                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1647625388/growfunding/tyler-casey-zplYiXUxjXI-unsplash_ypo8tg.jpg',
+                       goal_amount=15000)
+
+    fund7 = Fundraiser(user_id=7,
+                       category_id=4,
+                       name='Help me get a surgery to fix my vision',
+                       description="""I really need a surgery to correct my vision.
+                       My eyesight is very poor and glasses are not helping.
+                       Help me restore my vision and see clearly again!
+                       """,
+                       city='Vienna',
+                       state='Austria',
+                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1647623548/growfunding/brands-people-sWQrD5s0fWc-unsplash_woanpo.jpg',
+                       goal_amount=4000)
+
+    fund8 = Fundraiser(user_id=6,
+                       category_id=8,
+                       name='I need a car',
+                       description="""I've got a driver's license, but can't afford a car.
+                       Please help me buy a car. I am tired of being on feet all the time.
+                       I spend all my money on rent, so it would be nice if anybody could help me out.
+                       Cheers!
+                       """,
+                       city='Los Angeles',
+                       state='CA',
+                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1647623262/growfunding/grahame-jenkins-p7tai9P7H-s-unsplash_l0c52c.jpg',
+                       goal_amount=5000)
+
+    fund9 = Fundraiser(user_id=3,
+                       category_id=6,
+                       name='Raise money to plant trees',
+                       description="""We are raising money to plant 500+
+                       trees in our town. There are very few trees here and
+                       we want to change that. Help our town and help the environment!
+                       """,
+                       city='Tucson',
+                       state='AZ',
+                       image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1647622997/growfunding/ben-vaughn-Gfv573rGwxw-unsplash_ui37wb.jpg',
+                       goal_amount=8000)
+
+    fund10 = Fundraiser(user_id=2,
+                        category_id=2,
+                        name='Save student newspaper',
+                        description="""Our student newspaper, The Student Times,
+                        is on the verge of closing. Help us keep our operation going
+                        and report on important things happening in and around our
+                        university and town. You would be making a huge favor
+                        to the entire student community of our city.
+                        Let's keep people informed!
+                        """,
+                        city='Pittsburgh',
+                        state='PA',
+                        image_url='https://res.cloudinary.com/djogxk6nz/image/upload/v1647623201/growfunding/roman-kraft-_Zua2hyvTBk-unsplash_qg0don.jpg',
+                        goal_amount=15000)
+
+    db.session.add_all([fund1, fund2, fund3, fund4, fund5, fund6, fund7, fund8,
+                        fund9, fund10
+                        ])
     db.session.commit()
 
 
