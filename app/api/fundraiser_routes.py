@@ -35,6 +35,7 @@ def top_fundraisers():
 def fundraisers_by_category(category):
     fundraisers = Fundraiser.query.join(Category) \
                             .filter(Category.name == category) \
+                            .order_by(Fundraiser.created_at) \
                             .all()
     return {fundraiser.id: fundraiser.to_dict() for fundraiser in fundraisers}
 
