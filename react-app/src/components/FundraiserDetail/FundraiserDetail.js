@@ -19,6 +19,7 @@ const FundraiserDetail = () => {
   const user = useSelector(state => state.session.user);
 
   useEffect(() => {
+    if (fundraiser) return;
     const fetchFundraiser = async () => {
       const data = await dispatch(getOneFundraiser(id));
       if (data.message) {
@@ -26,7 +27,7 @@ const FundraiserDetail = () => {
       }
     }
     fetchFundraiser();
-  }, [dispatch, id]);
+  }, [dispatch, id, fundraiser]);
 
   const onDelete = () => {
     dispatch(deleteFundraiser(fundraiser.id));
