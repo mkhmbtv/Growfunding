@@ -27,9 +27,11 @@ const LandingPage = () => {
         <div className="absolute top-[35%] left-28">
           <h1 className="mb-11">
             <span className="block text-5xl font-black text-white mb-4 w-2/3 leading-tight">
-              Trusted fundraising for all of life's moments
+              Better fundraising for better future
             </span>
-            <span className="text-2xl font-extrabold text-white">Get help. Give kindness. Start right now.</span>
+            <span className="text-2xl font-extrabold text-white">
+              Make things happen. Start right now.
+            </span>
           </h1>
           <Link className='py-4 px-6 bg-primary rounded text-lg text-white w-full font-extrabold
               hover:bg-green-500 duration-200' 
