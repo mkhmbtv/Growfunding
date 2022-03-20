@@ -40,7 +40,7 @@ const removeOneFundraiser = (id) => {
 };
 
 export const getCategories = () => async (dispatch) => {
-  const res = await fetch('/api/categories');
+  const res = await fetch('/api/categories/');
   if (res.ok) {
     const data = await res.json();
     dispatch(setCategories(data.categories))
@@ -48,7 +48,7 @@ export const getCategories = () => async (dispatch) => {
 };
 
 export const getFundraisers = () => async (dispatch) => {
-  const res = await fetch('/api/fundraisers');
+  const res = await fetch('/api/fundraisers/');
   if (res.ok) {
     const data = await res.json();
     dispatch(setFundraisers(data));

@@ -5,8 +5,7 @@ const DonationBox = ({ fundraiser, sum }) => {
     return (sum / fundraiser.goal_amount) * 100;
   };
 
-  const topDonations = fundraiser.donations.slice(0, 3).sort((a, b) => b.amount - a.amount);
-
+  const topDonations = fundraiser.donations.sort((a, b) => b.amount - a.amount).slice(0, 3);
  
   return (
     <div className="col-span-2 h-fit sticky top-20 p-6 border rounded-sm shadow-xl" style={{ alignSelf: "start" }}>
