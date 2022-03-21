@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { editFundraiser, getCategories } from "../../store/fundraisers";
+import { editFundraiser } from "../../store/fundraisers";
+import { getCategories } from "../../store/categories";
 
 const EditFundraiserForm = ({ fundraiser, handleClose }) => {
   const [name, setName] = useState(fundraiser.name);
@@ -13,12 +14,13 @@ const EditFundraiserForm = ({ fundraiser, handleClose }) => {
   const [errors, setErrors] = useState([]);
 
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.fundraisers.categories)
+  const categories = useSelector(state => state.categories.byId);
+  const categoriesIds = useSelector(state => state.categories.allIds);
 
   useEffect(() => {
-    if (categories.length > 0) return;
+    if (categoriesIds.length > 0) return;
     dispatch(getCategories());
-  }, [dispatch, categories]);
+  }, [dispatch, categoriesIds]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -87,9 +89,9 @@ const EditFundraiserForm = ({ fundraiser, handleClose }) => {
               onChange={(e) => setCategoryId(e.target.value)}
             >
               <option value='' disabled>Choose a category</option>
-              {categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
+              {categoriesIds.map(categoryId => (
+                <option key={categoryId} value={categoryId}>
+                  {categories[categoryId].name}
                 </option>
               ))}
             </select>

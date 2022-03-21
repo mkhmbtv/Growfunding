@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getFundraisersByCategory } from "../../store/fundraisers";
+import { getCategories } from "../../store/categories";
 import Fundraiser from "../Fundraiser";
 
 const FundraisersByCategory = () => {
@@ -9,21 +9,27 @@ const FundraisersByCategory = () => {
   category = category.charAt(0).toUpperCase() + category.slice(1);
 
   const dispatch = useDispatch();
-  const fundraisers = useSelector(state => state.fundraisers.byId);
-  const byCategory = Object.values(fundraisers).filter(f => f.category.name === category);
+  const searchedCategory = useSelector(state => Object.values(state.categories.byId).find(c => c.name === category));
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(getFundraisersByCategory(category));
-  }, [dispatch, category]);
+    dispatch(getCategories());
+  }, [dispatch]);
 
-  if (!fundraisers) return null;
+  useEffect(() => {
+    if (searchedCategory) {
+      setIsLoaded(true);
+    }
+  }, [searchedCategory]);
+
+  if (!isLoaded) return null;
   
   return (
     <div className="px-28 pt-10 pb-20">
       <h2 className="mb-8 text-3xl font-black">{category}</h2>
       <div className="grid grid-cols-layout gap-8">
-        {byCategory.map(fundraiser => (
-          <Fundraiser key={fundraiser.id} fundraiser={fundraiser} />
+        {searchedCategory.fundraisers.map(fundraiserId => (
+          <Fundraiser key={fundraiserId} fundraiserId={fundraiserId} />
         ))}
       </div>
     </div>

@@ -10,8 +10,8 @@ const setSearch = (results) => {
 export const getQueryResults = (query) => async (dispatch) => {
   const res = await fetch(`/api/fundraisers/search?${query}`);
   const data = await res.json();
-  dispatch(setSearch(data.fundraisers));
-  return data.fundraisers;
+  dispatch(setSearch(data));
+  return data;
 };
 
 const initialState = { results: [] }

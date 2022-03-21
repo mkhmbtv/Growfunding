@@ -1,21 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getFundraisers, getFundraisersOrder } from "../../store/fundraisers";
+import { getFundraisersOrder } from "../../store/fundraisers";
 import Fundraiser from "../Fundraiser";
 import Categories from "./Categories";
 import background from "../../images/hero.jpg";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  const fundraisers = useSelector(state => state.fundraisers.byId);
   const topFundraisersIds = useSelector(state => state.fundraisers.order);
 
   useEffect(() => {
-    (async () => {
-      await dispatch(getFundraisers());
-      await dispatch(getFundraisersOrder());
-    })()
+    dispatch(getFundraisersOrder());
   }, [dispatch]);
 
   return (
@@ -45,7 +41,7 @@ const LandingPage = () => {
         <h2 className="mb-8 text-2xl font-black">Top Fundraisers</h2>
         <div className="grid grid-cols-layout gap-8">
           {topFundraisersIds.slice(0, 3).map(id => (
-            <Fundraiser key={id} fundraiser={fundraisers[id]} />
+            <Fundraiser key={id} fundraiserId={id} />
           ))}
         </div>
       </div>

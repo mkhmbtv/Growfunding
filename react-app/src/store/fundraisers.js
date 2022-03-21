@@ -1,5 +1,4 @@
 const ADD_ONE_FUNDRAISER = 'fundraisers/ADD_ONE_FUNDRAISER';
-const SET_CATEGORIES = 'fundraisers/SET_CATEGORIES';
 const SET_FUNDRAISERS = 'fundraisers/SET_FUNDRAISERS';
 const REMOVE_ONE_FUNDRAISER = 'fundraisers/REMOVE_ONE_FUNDRAISER';
 const SET_ORDER = 'fundraisers/SET_ORDER';
@@ -8,13 +7,6 @@ const setFundraisers = (fundraisers) => {
   return {
     type: SET_FUNDRAISERS,
     fundraisers
-  };
-};
-
-const setCategories = (categories) => {
-  return {
-    type: SET_CATEGORIES,
-    categories
   };
 };
 
@@ -39,28 +31,11 @@ const removeOneFundraiser = (id) => {
   };
 };
 
-export const getCategories = () => async (dispatch) => {
-  const res = await fetch('/api/categories/');
-  if (res.ok) {
-    const data = await res.json();
-    dispatch(setCategories(data.categories))
-  }
-};
-
 export const getFundraisers = () => async (dispatch) => {
   const res = await fetch('/api/fundraisers/');
   if (res.ok) {
     const data = await res.json();
     dispatch(setFundraisers(data));
-  }
-};
-
-export const getFundraisersByCategory = (category) => async (dispatch) => {
-  const res = await fetch(`/api/fundraisers/${category}`);
-  if (res.ok) {
-    const data = await res.json();
-    dispatch(setFundraisers(data));
-    return data;
   }
 };
 
@@ -237,7 +212,6 @@ export const getFundraisersOrder = () => async (dispatch) => {
 const initialState = {
   byId: {},
   order: [],
-  categories: [],
 };
 
 export default function reducer (state = initialState, action) {
@@ -263,12 +237,6 @@ export default function reducer (state = initialState, action) {
       newState = {
         ...state,
         order: action.list
-      };
-      return newState;
-    case SET_CATEGORIES:
-      newState = {
-        ...state,
-        categories: action.categories,
       };
       return newState;
     default:

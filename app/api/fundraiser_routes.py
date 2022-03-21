@@ -31,15 +31,6 @@ def top_fundraisers():
     return jsonify([fundraiser.id for fundraiser in fundraisers])
 
 
-@fund_routes.route('/<string:category>')
-def fundraisers_by_category(category):
-    fundraisers = Fundraiser.query.join(Category) \
-                            .filter(Category.name == category) \
-                            .order_by(Fundraiser.created_at) \
-                            .all()
-    return {fundraiser.id: fundraiser.to_dict() for fundraiser in fundraisers}
-
-
 @fund_routes.route('/<int:id>')
 def fundraiser(id):
     fundraiser = Fundraiser.query.get(id)
@@ -63,9 +54,7 @@ def search_fundraisers():
                                         )
                                     ) \
                             .all()
-    return {'fundraisers': [fundraiser.to_simple_dict()
-                            for fundraiser in fundraisers
-                            ]}
+    return jsonify([fundraiser.id for fundraiser in fundraisers])
 
 
 @fund_routes.route('/', methods=['POST'])

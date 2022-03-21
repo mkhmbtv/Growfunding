@@ -17,5 +17,6 @@ class Category(db.Model):
             "id": self.id,
             "name": self.name,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "fundraisers": [fundraiser.id for fundraiser in self.fundraisers]
         }

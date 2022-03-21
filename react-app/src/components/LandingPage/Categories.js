@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getCategories } from "../../store/fundraisers";
+import { getCategories } from "../../store/categories";
 
 const Icon = ({ name }) => {
   return (
@@ -25,22 +25,23 @@ const Icon = ({ name }) => {
 
 const Categories = () => {
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.fundraisers.categories);
+  const categories = useSelector(state => state.categories.byId);
+  const categoriesIds = useSelector(state => state.categories.allIds);
 
   useEffect(() => {
-    if (categories.length > 0) return;
+    if (categoriesIds.length > 0) return;
     dispatch(getCategories());
-  }, [dispatch, categories]);
+  }, [dispatch, categoriesIds.length]);
 
   return (
     <div className="bg-neutral-light p-16">
       <h2 className="mb-12 text-2xl font-black text-center">Browse by fundraising category</h2>
       <div className="grid grid-cols-4 gap-y-7 justify-items-center">
-        {categories.map(category => (
-          <Link key={category.id} to={`/f/${category.name.toLowerCase()}`}>
+        {categoriesIds.map(categoryId => (
+          <Link key={categoryId} to={`/f/${categories[categoryId].name.toLowerCase()}`}>
             <div className="flex flex-col items-center">
-              <span className="text-primary text-4xl"><Icon name={category.name} /></span>
-              <span className="ml-2 duration-200 hover:text-primary">{category.name}</span>
+              <span className="text-primary text-4xl"><Icon name={categories[categoryId].name} /></span>
+              <span className="ml-2 duration-200 hover:text-primary">{categories[categoryId].name}</span>
             </div>
           </Link>
         ))}

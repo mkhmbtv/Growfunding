@@ -1,7 +1,22 @@
 import { Link } from "react-router-dom";
 import moment from 'moment';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getOneFundraiser } from "../../store/fundraisers";
 
-const Fundraiser = ({ fundraiser }) => {
+const Fundraiser = ({ fundraiserId }) => {
+  const dispatch = useDispatch();
+  const fundraiser = useSelector(state => state.fundraisers.byId[fundraiserId]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (fundraiser) {
+      setIsLoaded(true);
+      return;
+    }
+    dispatch(getOneFundraiser(fundraiserId))
+  }, [dispatch, fundraiserId, fundraiser])
+
   const getDonationsSum = () => {
     let sum = 0;
     fundraiser.donations.forEach(f => {
@@ -14,7 +29,7 @@ const Fundraiser = ({ fundraiser }) => {
     return (getDonationsSum() / fundraiser.goal_amount) * 100;
   };
   
-  if (!fundraiser) return null;
+  if (!isLoaded) return null;
   
   return (
     <div className="rounded overflow-hidden shadow-md">
