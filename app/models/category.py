@@ -12,6 +12,14 @@ class Category(db.Model):
 
     fundraisers = db.relationship("Fundraiser", back_populates="category")
 
+    def to_simple_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
     def to_dict(self):
         return {
             "id": self.id,

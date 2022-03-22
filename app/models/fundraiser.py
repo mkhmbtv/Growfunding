@@ -47,7 +47,7 @@ class Fundraiser(db.Model):
             'image_url': self.image_url,
             'goal_amount': self.goal_amount,
             'organizer': self.organizer.to_dict(),
-            'category': self.category.to_dict(),
+            'category': self.category.to_simple_dict(),
             'donations': [donation.to_dict() for donation in self.donations],
             'created_at': self.created_at,
             'updated_at': self.updated_at

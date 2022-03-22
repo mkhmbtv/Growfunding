@@ -13,8 +13,6 @@ const SearchResults = () => {
     dispatch(getQueryResults(location.search.slice(1)));
   }, [dispatch, location.search,]);
 
-  console.log(fundraisersIds)
-
   const keyword = new URLSearchParams(location.search).get('q');
   
   return (
