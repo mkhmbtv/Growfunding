@@ -1,18 +1,31 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { getFundraisersOrder } from "../../store/fundraisers";
+import { useAuth } from "../../context/AuthContext";
 import Fundraiser from "../Fundraiser";
 import Categories from "./Categories";
 import background from "../../images/hero.jpg";
 
 const LandingPage = () => {
+  const { setShowLoginForm } = useAuth();
   const dispatch = useDispatch();
+
   const topFundraisersIds = useSelector(state => state.fundraisers.order);
+  const user = useSelector(state => state.session.user);
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getFundraisersOrder());
   }, [dispatch]);
+
+  const handleNewFundraiser = () => {
+    if (user) {
+      history.push('/new-fundraiser');
+    } else {
+      setShowLoginForm(true);
+    }
+  }
 
   return (
     <div>
@@ -21,7 +34,7 @@ const LandingPage = () => {
         style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${background})`}}
       >
         <div className="absolute top-[35%] left-28">
-          <h1 className="mb-11">
+          <h1 className="mb-9">
             <span className="block text-5xl font-black text-white mb-4 w-2/3 leading-tight">
               Better fundraising for better future
             </span>
@@ -29,12 +42,12 @@ const LandingPage = () => {
               Make things happen. Start right now.
             </span>
           </h1>
-          <Link className='py-4 px-6 bg-primary rounded text-lg text-white w-full font-extrabold
+          <button className='py-3.5 px-6 bg-primary rounded text-lg text-white font-extrabold
               hover:bg-green-500 duration-200' 
-              to='/new-fundraiser'
+              onClick={handleNewFundraiser}
           >
             Start Fundraising
-          </Link>
+          </button>
         </div>
       </header>
       <div className="px-28 py-16">
@@ -49,12 +62,12 @@ const LandingPage = () => {
       <div className="py-16">
         <h3 className="text-center text-2xl font-light mb-4">Ready to start fundraising?</h3>
         <div className="text-center">
-          <Link className='py-4 px-6 bg-primary rounded text-lg text-white font-extrabold
+          <button className='py-4 px-6 bg-primary rounded text-lg text-white font-extrabold
               hover:bg-green-500 duration-200 mt-6 mb-4 inline-block w-fit'
-            to='/new-fundraiser'
+            onClick={handleNewFundraiser}
           >
             Start Fundraising
-          </Link>
+          </button>
         </div>
       </div>
     </div>
